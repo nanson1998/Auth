@@ -1,26 +1,18 @@
 package main
 
-import (
-	"jwt-todo/helper/mysql"
-	"log"
-	"net/http"
-	"os"
-	"time"
+import "jwt-todo/helper/redis"
 
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-)
-
-var router = gin.Default()
+/* var router = gin.Default() */
 
 func main() {
-	router.POST("/login", Login)
-	log.Fatal(router.Run(":8080"))
-	//redis.ConnectRedis()
-	mysql.Connect()
+	//.POST("/login", Login)
+	//log.Fatal(router.Run(":8080"))+
+	//mysql.Connect()
+	redis.ConnectRd()
+
 }
 
-type User struct {
+/* type User struct {
 	ID       uint64 `json:"id"`
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -65,3 +57,4 @@ func CreateToken(userid uint64) (string, error) {
 	}
 	return token, nil
 }
+*/
