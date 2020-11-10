@@ -19,10 +19,7 @@ func Connect() {
 	DB.SetMaxOpenConns(100)
 	DB.SetMaxIdleConns(100)
 	DB.SetConnMaxLifetime(time.Second * 3)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	ErrorCheck(err)
 	defer DB.Close()
 
 	var name string
@@ -40,17 +37,17 @@ func Connect() {
 		fmt.Println(err)
 		return
 	}
-	// Create a new conn
-	fmt.Println("conn2 created time:", time.Now())
-	conn2, err := DB.Conn(context.Background())
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	insert, err := DB.Prepare("INSERT INTO test VALUES ( 2, 'Nam' )")
+	ErrorCheck(err)
+	defer insert.Close()
 
 	_ = conn.Close()
-	_ = conn2.Close()
 
-	time.Sleep(30 * time.Second)
+	time.Sleep(3 * time.Second)
 
+}
+func ErrorCheck(err error) {
+	if err != nil {
+		panic(err.Error())
+	}
 }
